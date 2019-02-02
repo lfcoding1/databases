@@ -2,7 +2,7 @@
 
 let mysql = require('mysql');
 
-//ALTER USER 'root'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY 'poop';
+//ALTER USER 'root'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY '';
 let connection = mysql.createConnection({
     host:  'localhost',
     user: 'root',
