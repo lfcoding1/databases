@@ -1,0 +1,190 @@
+
+
+// 1. What is the capital of country X ? (Accept X from user)
+ANSWER:
+Prepared Statement:
+PREPARE capital FROM 'SELECT city.Name, country.Capital FROM city INNER JOIN country ON city.ID = country.Capital WHERE country.Name = ?';
+
+Execution:
+SET @a = 'SPAIN';
+EXECUTE capital USING @a;
+
+Result:
++--------+---------+
+| Name   | Capital |
++--------+---------+
+| Madrid |     653 |
++--------+---------+
+1 row in set (0,00 sec)
+
+Deallocation:
+DEALLOCATE PREPARE capital;
+
+//2. List all the languages spoken in the region Y (Accept Y from user)
+Prepared Statement:
+PREPARE language FROM 'SELECT countrylanguage.language FROM countrylanguage INNER JOIN country ON country.code = countrylanguage.countrycode WHERE country.Region = ?';
+
+Execution:
+SET @a = 'Middle East';
+EXECUTE language USING @a:
+
+Result:
+mysql> EXECUTE language USING @a;
++-------------+
+| language    |
++-------------+
+| Arabic      |
+| Hindi       |
+| Armenian    |
+| Azerbaijani |
+| Armenian    |
+| Azerbaijani |
+| Lezgian     |
+| Russian     |
+| Arabic      |
+| English     |
+| Greek       |
+| Turkish     |
+| Abhyasi     |
+| Armenian    |
+| Azerbaijani |
+| Georgiana   |
+| Osseetti    |
+| Russian     |
+| Arabic      |
+| Assyrian    |
+| Azerbaijani |
+| Kurdish     |
+| Persian     |
+| Arabic      |
+| Hebrew      |
+| Russian     |
+| Arabic      |
+| Armenian    |
+| Circassian  |
+| Arabic      |
+| English     |
+| Arabic      |
+| Armenian    |
+| French      |
+| Arabic      |
+| Balochi     |
+| Arabic      |
+| Hebrew      |
+| Arabic      |
+| Urdu        |
+| Arabic      |
+| Arabic      |
+| Kurdish     |
+| Arabic      |
+| Kurdish     |
+| Turkish     |
+| Arabic      |
+| Soqutri     |
++-------------+
+48 rows in set (0,00 sec)
+
+Deallocate:
+DEALLOCATE PREPARE language;
+
+// 3. Find the number of cities in which language Z is spoken (Accept Z from user)
+
+Prepared Statement:
+PREPARE cities FROM 'SELECT COUNT(*) FROM city INNER JOIN countrylanguage ON city.countryCode = countrylanguage.countryCode WHERE countrylanguage.language = ?';
+
+Execution:
+SET @a = 'french';
+
+EXECUTE cities USING @a;
+
+Result:
+mysql> EXECUTE cities USING @a;
++----------+
+| COUNT(*) |
++----------+
+|      467 |
++----------+
+1 row in set (0,01 sec)
+
+Deallocate:
+DEALLOCATE PREPARE cities;
+
+//4. Are there any countries that have A) Same official language B) Same region If yes, display those countries. If no, display TRUE or FALSE
+
+
+
+//5. List all the continents with the number of languages spoken in each continent
+Prepare:
+PREPARE continent FROM 'SELECT continent, COUNT(language) 
+FROM countrylanguage INNER JOIN country 
+ON country.code = countrylanguage.countrycode GROUP BY country.continent; 
+
+Execute:
+EXECUTE continent;
+
+Results:
++---------------+-----------------+
+| continent     | COUNT(language) |
++---------------+-----------------+
+| North America |             109 |
+| Asia          |             239 |
+| Africa        |             310 |
+| Europe        |             202 |
+| South America |              42 |
+| Oceania       |              82 |
++---------------+-----------------+
+
+
+
+
+
+//try this for q4:
+create table q4 AS SELECT name, region, code FROM country INNER JOIN countrylanguage ON country.code = countrylanguage.countrycode;
+
+
+This selects all the countries that speak a certain language and prints them out:
+PREPARE language FROM 'SELECT name
+FROM country INNER JOIN countrylanguage ON countrylanguage.countrycode = country.code  WHERE language IN (SELECT language FROM countrylanguage WHERE countrylanguage.language = ?)';
+
+This selects all the countries in a region:
+PREPARE region FROM 'SELECT name, region FROM country WHERE region = ?';
+
+
+TRY TOGETHER:
+
+PREPARE language FROM 'SELECT name
+FROM country INNER JOIN countrylanguage ON countrylanguage.countrycode = country.code  
+WHERE language IN 
+(SELECT language FROM countrylanguage WHERE countrylanguage.language = ?)
+AND (SELECT name, region FROM country WHERE region = ?)';
+
+CREATE TEMPORARY TABLE IF NOT EXISTS tempTable AS (SELECT name, region FROM country
+UNION SELECT countrycode, language FROM countrylanguage)
+
+SELECT country, language FROM tempTable WHERE language.isofficial = 'T';
+
+
+SELECT * FROM country.name WHERE (SELECT region FROM country WHERE ) (SELECT language FROM countrylanguage INNER JOIN country ON country)
+
+
+PREPARE language FROM 'SELECT distinct (country.name) FROM (SELECT region FROM country INNER JOIN countrylanguage ON
+country.code = countrylanguage.countrycode WHERE language.isofficial = 
+'T') INNER JOIN 
+
+INPUT: country 
+OUTPUT: all countries in that region where language is same official language, or true/false.
+
+use joins and subselects.
+
+let language =
+if language.isofficial?) !=== language.isofficial(?)
+
+
+try a temporary table:
+CREATE TEMPORARY TABLE IF NOT EXISTS temptable AS (SELECT name, region, code FROM country UNION SELECT countrycode, language, isofficial FROM countrylanguage);
+
+then try:
+PREPARE language FROM 'SELECT name FROM temptable WHERE (SELECT language FROM temptable WHERE region = ?)';
+
+PREPARE language FROM 'SELECT name FROM country WHERE (SELECT language FROM countrylanguage INNER JOIN country ON country.code = countrylanguage.countrycode WHERE region = ?)';
+
