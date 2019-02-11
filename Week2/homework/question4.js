@@ -10,11 +10,11 @@ let connection = mysql.createConnection({
 });
 
 
-let userInput = process.argv[2];
-let input2 = process.argv[3];
-let input3 = process.argv[4];
-let query = connection.query("SELECT name FROM country WHERE region IN (SELECT region FROM country WHERE name = ? AND code IN (SELECT countrycode FROM countrylanguage WHERE language = ? AND isOfficial = ?)))", [userInput], [input2], [input3], function (err, results){
+let userInput = process.argv[2] + ' ' + process.argv[3];
+let input2 = process.argv[4];
+let params = userInput + ' ' + input2;
+let query = connection.query('SELECT name FROM country WHERE region IN (SELECT region FROM country WHERE name = ? AND code IN (SELECT countrycode FROM countrylanguage WHERE language = "French" AND isOfficial = "T"))', params, ((err, results) =>{
     if (err) throw err;
     console.log(results);  
-  });
+  }));
   
