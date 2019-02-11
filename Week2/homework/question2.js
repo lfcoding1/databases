@@ -21,7 +21,7 @@ let query = connection.query("SELECT DISTINCT countrylanguage.language FROM coun
     if (err) throw err;
     console.log(results); 
 });
-    
+connection.end();    
 //output: example Middle East
 /*RowDataPacket { language: 'Arabic' },
   RowDataPacket { language: 'Hindi' },

@@ -9,8 +9,12 @@ let connection = mysql.createConnection({
     database: "new_world",
 });
 
-let alert = console.log('There are 10 or more than 10 languages for this country');
-let query = connection.query("CREATE TRIGGER language BEFORE INSERT ON countrylanguage.language FOR EACH ROW BEGIN IF (countrylanguage.language >= 10 THEN " + alert + "END IF; END", [userInput], function (err, results, fields){
-    if (err) throw err;
-    console.log(results); 
-});
+
+let userInput = console.log('More than 10 entries');
+let allowedInput = console.log('entry updated')
+let query = connection.query("CREATE TRIGGER language AFTER INSERT ON countrylanguage FOR EACH  ROW BEGIN IF NEW.language (COUNT >= 10) THEN SET @userInput = ?; ELSE SET @allowedInput = ?; END IF; INSERT INTO countrylanguage (countrycode, language) VALUES ('AGO', 'ARMENIAN')", [userInput, allowedInput], function (err, results){
+  if (err) throw err;
+  console.log(results);
+});  
+
+  connection.end();

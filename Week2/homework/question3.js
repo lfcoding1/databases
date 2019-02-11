@@ -20,6 +20,6 @@ let query = connection.query("SELECT COUNT(*) FROM city INNER JOIN countrylangua
     if (err) throw err;
     console.log(results); 
 });
-
+connection.end();
 //example output: Creole English:
 // [ RowDataPacket { 'COUNT(*)': 60 } ]

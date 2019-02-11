@@ -21,6 +21,8 @@ let query = connection.query("SELECT city.Name, country.Capital FROM city INNER 
   if (err) throw err;
   console.log(results);  
 });
+
+connection.end();
 //output: if userInput = France
 //[ RowDataPacket { Name: 'Paris', Capital: 2974 } ]
 

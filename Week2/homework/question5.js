@@ -15,6 +15,7 @@ let query = connection.query("SELECT continent, COUNT(language)  FROM countrylan
     if (err) throw err;
     console.log(results); 
 });
+connection.end();
 //output:
 /*[ RowDataPacket { continent: 'North America', 'COUNT(language)': 109 },
   RowDataPacket { continent: 'Asia', 'COUNT(language)': 239 },
