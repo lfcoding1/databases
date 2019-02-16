@@ -11,7 +11,7 @@ let connection = mysql.createConnection({
 
 
 //5. List all the continents with the number of languages spoken in each continent
-let query = connection.query("SELECT continent, COUNT(language)  FROM countrylanguage INNER JOIN country ON country.code = countrylanguage.countrycode GROUP BY country.continent; ", function (err, results){
+let query = connection.query("SELECT continent, COUNT (DISTINCT language)  FROM countrylanguage INNER JOIN country ON country.code = countrylanguage.countrycode GROUP BY country.continent; ", function (err, results){
     if (err) throw err;
     console.log(results); 
 });

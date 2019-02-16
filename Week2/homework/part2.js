@@ -17,4 +17,4 @@ let query = connection.query("CREATE TRIGGER language AFTER INSERT ON countrylan
   console.log(results);
 });  
 
-  connection.end();
+

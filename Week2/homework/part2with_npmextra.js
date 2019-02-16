@@ -26,19 +26,22 @@ let mysqlEventWatcher = MySQLEvents(dsn);
     console.log(results);
     console.log('insert added to countrylanguage table'); 
 }); */
+let userCode = process.argv[2];
+let userLang = process.argv[3];
 
 let watcher = mysqlEventWatcher.add(
     'new_world.countrylanguage.language.value',
     function(language, event) {
         if (countrycode === 'AGO' && language (COUNT < 10)) {
-            "INSERT INTO countrylanguage (countrycode, language) VALUES ('AGO', 'Polish')";
+            "INSERT INTO countrylanguage (countrycode, language) VALUES ('userCode', 'userLang')";
         }
         if ( countrycode === 'AGO' && language (COUNT >= 10)) {
-            "INSERT INTO countrylanguage (countrycode, language) VALUES ('AGO', 'Polish')";
+            "INSERT INTO countrylanguage (countrycode, language) VALUES ('userCode', 'userLang')";
             console.log('There are now 10 or more entries in this field')
         }
     }
 );
+connection.end();
 
 /*let queryremove = connection.query("DELETE FROM countrylanguage WHERE countrycode = 'AGO' AND language = 'Polish'", function (err, results){
     if (err) throw err;

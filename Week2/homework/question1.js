@@ -16,7 +16,6 @@ console.log(userInput);
 
 
 //question 1: What is the capital of country X ? (Accept X from user)
-let userInput = process.argv[2];
 let query = connection.query("SELECT city.Name, country.Capital FROM city INNER JOIN country ON city.ID = country.Capital WHERE country.Name = ?", [userInput], function (err, results, fields){
   if (err) throw err;
   console.log(results);  
