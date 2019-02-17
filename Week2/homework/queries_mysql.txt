@@ -22,7 +22,7 @@ DEALLOCATE PREPARE capital;
 
 //2. List all the languages spoken in the region Y (Accept Y from user)
 Prepared Statement:
-PREPARE language FROM 'SELECT countrylanguage.language FROM countrylanguage INNER JOIN country ON country.code = countrylanguage.countrycode WHERE country.Region = ?';
+PREPARE language FROM 'SELECT DISTINCT countrylanguage.language FROM countrylanguage INNER JOIN country ON country.code = countrylanguage.countrycode WHERE country.Region = ?';
 
 Execution:
 SET @a = 'Middle East';
@@ -30,6 +30,7 @@ EXECUTE language USING @a:
 
 Result:
 mysql> EXECUTE language USING @a;
+(this was without DISTINCT, therefore there are repeats of the languages)
 +-------------+
 | language    |
 +-------------+

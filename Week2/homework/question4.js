@@ -8,13 +8,19 @@ let connection = mysql.createConnection({
     password: "hyfuser",
     database: "new_world",
 });
+let select = 'select co.continent, co.name, l.language from country co inner join countrylanguage l on co.code = l.countrycode where l.language in (select l.language from country c inner join countrylanguage l on c.code = l.countrycode where c.name = "France" and l.isofficial = "T") and co.continent = (select continent from country where name = "Barbados")';
+  
 
 
 let userInput = process.argv[2] + ' ' + process.argv[3];
 let input2 = process.argv[4];
-let params = userInput + ' ' + input2;
-let query = connection.query('SELECT name FROM country WHERE region IN (SELECT region FROM country WHERE name = ? AND code IN (SELECT countrycode FROM countrylanguage WHERE language = "French" AND isOfficial = "T"))', params, ((err, results) =>{
+let params =userInput + ' ' + input2;
+let query = connection.query(select, params, ((err, results) =>{
     if (err) throw err;
     console.log(results);  
   }));
+
+  connection.end();
+
+
   
