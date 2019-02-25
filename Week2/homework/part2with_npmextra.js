@@ -32,10 +32,10 @@ let userLang = process.argv[3];
 let watcher = mysqlEventWatcher.add(
     'new_world.countrylanguage.language.value',
     function(language, event) {
-        if (countrycode === 'AGO' && language (COUNT < 10)) {
+        if (countrycode === userCode && language (COUNT < 10)) {
             "INSERT INTO countrylanguage (countrycode, language) VALUES ('userCode', 'userLang')";
         }
-        if ( countrycode === 'AGO' && language (COUNT >= 10)) {
+        if ( countrycode === userCode && language (COUNT >= 10)) {
             "INSERT INTO countrylanguage (countrycode, language) VALUES ('userCode', 'userLang')";
             console.log('There are now 10 or more entries in this field')
         }
