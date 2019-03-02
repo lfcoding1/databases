@@ -2,22 +2,15 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
+const connection = require ('./connect')
  
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'hyfuser',
-  database: 'todo'
-});
-
 // connect to database
 connection.connect();
-
  
 // default route
 app.get('/', function (req, res) {
@@ -30,7 +23,6 @@ app.get('/todos', function (req, res) {
       if (error) throw error;
       return res.send({results});
   });
-  connection.end();
 });
 //get an id with a certain id
 app.get('/todo/:id', function (req, res) {
@@ -52,7 +44,6 @@ app.get('/todos/search/:keyword', function (req, res) {
       if (error) throw error;
       return res.send({ list: results});
   });
-  connection.end();
 });
 
 //insert into todo list
@@ -65,7 +56,6 @@ app.post('/todo', function (req, res) {
       if (error) throw error;
       return res.send({list: results, message: 'New task added'});
   });
-  connection.end();
 });
 
 //delete an item
@@ -78,7 +68,6 @@ app.delete('/todo', function (req, res) {
       if (error) throw error;
       return res.send({list: results, message: 'Task updated' });
   });
-  connection.end();
 }); 
 
 //update a todo with an id
