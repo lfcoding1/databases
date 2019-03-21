@@ -11,7 +11,7 @@ ALTER TABLE `tasks` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 
 
-/*same data*/
+/*sample data*/
 INSERT INTO `tasks` (`id`, `task`,`created_at`) VALUES
 (1, 'Shopping','2016-04-10 23:50:40'),
 (2, 'Homework','2016-04-10 23:50:40'),
